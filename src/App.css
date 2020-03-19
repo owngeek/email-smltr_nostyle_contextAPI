@@ -66,10 +66,7 @@ font-weight: 300;}
       background-color: #139ce9 !important;
     }
     .MuiButton-containedSecondary:disabled {background-color: #dbd9db !important; color: #959395 !important; }
-
-    .MuiInput-underline:after { border-bottom: 2px solid #4caf50 !important;}
-    .MuiFormLabel-root.Mui-focused{color:#4caf50 !important;}
-    .MuiInputLabel-root{color:#afafab !important;}
+    
     .loading {
       width: 100% !important;
       text-align: center;

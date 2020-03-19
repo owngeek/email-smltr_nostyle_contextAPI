@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import 'typeface-roboto';
@@ -10,11 +10,22 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 import DeleteIcon from '@material-ui/icons/Delete';
 
-
-
-
-
-
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: 'green',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'grey',
+    },
+    '& .MuiInput-underline.Mui-error:after': {
+      borderBottomColor: 'red',
+    },
+    '& .MuiInput-underline.Mui-focused:after': {
+      borderBottomColor: 'green',
+    },
+  },
+})(TextField);
 
 
 const useStyles = makeStyles(theme => ({
@@ -41,12 +52,18 @@ const useStyles = makeStyles(theme => ({
 function FormComponent() {
 
   const [values, setValues] = useState({ email: "", subject: "", message: "" })
+  const [errors,setErrors] = useState({email:false,subject:false,message:false})
   const [stage,setStage]=useState("")
+
   const handleChange = (e) => {
     setValues({
       ...values,
       [e.target.name]: e.target.value
     })
+  }
+
+  const handleBlur = (e) => {
+    console.log('onBlur',e.target.name)
   }
 
   const sendButtonStatus = () =>{
@@ -75,11 +92,11 @@ function FormComponent() {
           <div className="header">Send New Email</div>
           <form className={classes.root} noValidate autoComplete="off">
 
-            <TextField id="standard-basic" name="email" label="To:" value={values.email} onChange={handleChange} />
+            <CssTextField error={errors.email} id="custom-css-standard-input" name="email" label="To:" value={values.email} onChange={handleChange} onBlur={handleBlur}/>
 
-            <TextField id="standard-basic" name="subject" label="Subject:" value={values.subject} onChange={handleChange} />
+            <CssTextField error={errors.subject} id="custom-css-standard-input" name="subject" label="Subject:" value={values.subject} onChange={handleChange} />
 
-            <TextField id="standard-basic" name="message" label="Message:" value={values.message} onChange={handleChange} />
+            <TextField style={{borderBottomColor: 'green'}} valid="sadad" error={errors.message} id="custom-css-standard-input" name="message" label="Message:" value={values.message} onChange={handleChange} />
 
             <div className="loading">
               <CircularProgress disableShrink style={{display: stage != "sending" ? "none" : "block"}} />
